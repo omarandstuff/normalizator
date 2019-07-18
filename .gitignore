@@ -1,0 +1,7 @@
+.idea/
+coverage/
+.DS_Store
+.rbenv-gemsets
+.ruby-version
+.vscode/
+.bundle

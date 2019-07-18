@@ -1,0 +1,16 @@
+sudo: required
+cache: bundler
+dist: trusty
+language: ruby
+rvm:
+  - 2.0
+  - 2.1
+  - 2.2
+  - 2.4
+  - 2.5
+  - 2.6
+gemfiles:
+  - normalizator.gemspec
+script: "bundle exec rspec && bundle exec codeclimate-test-reporter"
+before_install:
+  - gem install bundler
