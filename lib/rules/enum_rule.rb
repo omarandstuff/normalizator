@@ -1,7 +1,7 @@
 # Normalizator::EnumRule module
 module Normalizator
   class EnumRule < BaseRule
-    def apply(value, original_row)
+    def apply(value, _original_row)
       value_on_failure = get_value_on_failure(value)
       best_match = nil
 
@@ -9,7 +9,7 @@ module Normalizator
 
       @options[:enumerators].each do |enum|
         if @options[:case_sensitive]
-          if value.strip === enum.strip
+          if value.strip == enum.strip
             best_match = value
             break
           end
@@ -23,7 +23,7 @@ module Normalizator
           sanitized_value = value.downcase.strip
           sanitized_enum = enum.downcase.strip
 
-          if sanitized_value === sanitized_enum
+          if sanitized_value == sanitized_enum
             best_match = enum
             break
           end

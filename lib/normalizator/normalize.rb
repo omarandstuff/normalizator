@@ -34,7 +34,7 @@ module Normalizator
         if field.instance_of? Array
           next if should_skip_mutly_field_rule(field, original_row)
           run_rules_on_multy_value(field, new_row, original_row)
-        else 
+        else
           next if should_skip_rule(field, new_row, original_row)
           new_row[field] = run_rules_on_value(@rules[field], original_row[field], original_row)
         end

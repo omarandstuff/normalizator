@@ -1,7 +1,7 @@
 # Normalizator::NumericRule module
 module Normalizator
   class NumericRule < BaseRule
-    def apply(value, original_row)
+    def apply(value, _original_row)
       value_on_failure = get_value_on_failure(value)
 
       apply_numeric_rules value_on_failure, value.to_i
