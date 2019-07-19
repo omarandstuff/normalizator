@@ -5,7 +5,7 @@ require 'normalizator/version'
 Gem::Specification.new do |spec|
   spec.name = 'normalizator'
   spec.version = Normalizator.gem_version
-  spec.summary = 'Normalizator normalize your unnormalized data}'
+  spec.summary = 'Normalizator normalize your unnormalized data'
   spec.authors = ['David De Anda']
   spec.email = 'timrudat@gmail.com'
   spec.description = ''
