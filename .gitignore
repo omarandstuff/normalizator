@@ -6,3 +6,4 @@ coverage/
 .vscode/
 .bundle
 Gemfile.lock
+*.gem

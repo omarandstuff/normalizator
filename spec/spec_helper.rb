@@ -1,4 +1,3 @@
-
 require 'rspec'
 require 'simplecov'
 require 'simplecov-json'

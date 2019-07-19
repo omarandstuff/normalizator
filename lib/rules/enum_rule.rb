@@ -8,7 +8,7 @@ module Normalizator
       raise(RuleError, 'Array of enumerators is expected in the rule constructor options') unless @options[:enumerators].instance_of? Array
 
       @options[:enumerators].each do |enum|
-        (best_match, perfect_match) = match_agains_enumerator(enum, value , best_match)
+        (best_match, perfect_match) = match_agains_enumerator(enum, value, best_match)
 
         break if perfect_match
       end
@@ -40,7 +40,7 @@ module Normalizator
       sanitized_enum = enum.downcase.strip
 
       return [enum, true] if sanitized_value == sanitized_enum
-      return [enum, false] if @options[:diffuse] && sanitized_enum.include?(sanitized_value)
+      return [enum, false] if @options[:diffuse] && !sanitized_value.empty? && sanitized_enum.include?(sanitized_value)
 
       [best_match, false]
     end

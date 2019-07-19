@@ -57,22 +57,31 @@ describe 'Normalizator' do
     end
 
     describe 'Custom rules' do
+      class DowncaseRule < Normalizator::BaseRule
+        def apply(values, original_row)
+          values.map { |value| value.downcase }
+        end
+      end
+
+      class CapitalizeRule < Normalizator::BaseRule
+        def apply(values, original_row)
+          values.map { |value| value.capitalize }
+        end
+      end
+
+      class SingleCapitalizeRule < Normalizator::BaseRule
+        def apply(value, original_row)
+          value.capitalize
+        end
+      end
+
+      class NoApplyRule < Normalizator::BaseRule
+      end
+
       it 'can run on and assign several fields at a time' do
-        class CustomMultifield < Normalizator::BaseRule
-          def apply(values, original_row)
-            values.map { |value| value.downcase }
-          end
-        end
-
-        class CustomMultifield2 < Normalizator::BaseRule
-          def apply(values, original_row)
-            values.map { |value| value.capitalize }
-          end
-        end
-
         rules = {
-          [:number1, :field1] => CustomMultifield2.new(),
-          [:field2, :field3] => [CustomMultifield.new(), CustomMultifield2.new()]
+          [:number1, :field1] => CapitalizeRule.new(),
+          [:field2, :field3] => [DowncaseRule.new(), CapitalizeRule.new()]
         }
 
         normalized_data = Normalizator.normalize(rules, [row, row])
@@ -82,7 +91,28 @@ describe 'Normalizator' do
           { number1: 'Hdgdf', field1: '  8 ', field2: 'Abcde', field3: 'Fghij' }
         ])
       end
-    end
 
+      it 'throws if custom rule does not implement apply method' do
+        rules = {
+          number1: NoApplyRule.new(),
+        }
+
+        expect{Normalizator.normalize(rules, [row, row])}.to raise_error(Normalizator::RuleError)
+      end
+
+      it 'can run rules on derived values' do
+        rules = {
+          [:field2, :field3] => DowncaseRule.new(),
+          field2: SingleCapitalizeRule.new({ runs_on_derived_value: true })
+        }
+
+        normalized_data = Normalizator.normalize(rules, [row, row])
+
+        expect(normalized_data).to eq( [
+          { field2: "Abcde", field3: "fghij"},
+          { field2: "Abcde", field3: "fghij"}
+        ])
+      end
+    end
   end
 end
