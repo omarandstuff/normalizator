@@ -36,11 +36,7 @@ module Normalizator
           run_rules_on_multy_value(rule_field, new_row, original_row)
         else
           next if should_skip_rule?(rule_field, new_row, original_row)
-
-          rules = @rules[rule_field]
-          runs_on_derived_value = should_provide_derived_value?(rules)
-          value = runs_on_derived_value ? new_row[rule_field] : original_row[rule_field]
-          new_row[rule_field] = run_rules_on_value(rules, value, original_row)
+          run_rules_on_single_value(rule_field, new_row, original_row)
         end
       end
 
@@ -57,6 +53,14 @@ module Normalizator
       multy_field.each_with_index do |sub_field, index|
         new_row[sub_field] = normalized_values[index]
       end
+    end
+
+    def run_rules_on_single_value(field, new_row, original_row)
+      rules = @rules[field]
+      runs_on_derived_value = should_provide_derived_value?(rules)
+      value = runs_on_derived_value ? new_row[field] : original_row[field]
+
+      new_row[field] = run_rules_on_value(rules, value, original_row)
     end
 
     def run_rules_on_value(rules, values, original_row)
