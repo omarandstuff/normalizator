@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.description = ''
   spec.homepage = 'https://github.com/omarandstuff/normalizator'
   spec.license = 'MIT'
-  spec.required_ruby_version = '>= 2.0'
+  spec.required_ruby_version = '>= 2.4'
 
 
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec|gemfiles|coverage|bin|media)/}) }
