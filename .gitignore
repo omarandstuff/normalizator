@@ -5,3 +5,4 @@ coverage/
 .ruby-version
 .vscode/
 .bundle
+Gemfile.lock
