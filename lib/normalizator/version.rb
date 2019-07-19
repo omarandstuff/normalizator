@@ -12,7 +12,7 @@ module Normalizator
     # minor version
     MINOR = 0
     # tiny version
-    TINY  = 0
+    TINY  = 1
     # alpha, beta, etc. tag
     PRE   = nil
 
